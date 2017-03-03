@@ -157,6 +157,10 @@ namespace WebSocketSharp
       var buff = ToByteArray ();
       stream.Write (buff, 0, buff.Length);
 
+      // On server 2016, the next step in the sslStream.ReadByte () will be blocked, add the following code will be resolved.
+      var bytes = Encoding.UTF8.GetBytes(CrLf);
+      stream.Write(bytes, 0, bytes.Length);
+
       return Read<HttpResponse> (stream, HttpResponse.Parse, millisecondsTimeout);
     }
 
